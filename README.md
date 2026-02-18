@@ -2,7 +2,7 @@
 
 A cyber‑styled web OS with a Kali‑inspired vibe. Drag windows, launch apps, and live inside a browser desktop.
 
-Live demo: (will be set after deployment)
+Live demo: https://omyaaa1.github.io/omos/
 
 ## Features
 
