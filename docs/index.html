@@ -1,0 +1,68 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Omos OS</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="wallpaper"></div>
+  <div class="noise"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo"></span>
+      <span>Omos</span>
+    </div>
+    <div class="center">
+      <span id="activeApp">Desktop</span>
+    </div>
+    <div class="status">
+      <span id="net">Secure</span>
+      <span id="battery">100%</span>
+      <span id="clock">00:00</span>
+    </div>
+  </header>
+
+  <main id="desktop" class="desktop" aria-label="Omos desktop"></main>
+
+  <nav class="dock" aria-label="App launcher">
+    <button class="dock-btn" data-app="terminal" title="Terminal">
+      <span class="dock-icon">>_</span>
+      <span class="dock-label">Terminal</span>
+    </button>
+    <button class="dock-btn" data-app="files" title="Files">
+      <span class="dock-icon">📁</span>
+      <span class="dock-label">Files</span>
+    </button>
+    <button class="dock-btn" data-app="browser" title="Browser">
+      <span class="dock-icon">🌐</span>
+      <span class="dock-label">Browser</span>
+    </button>
+    <button class="dock-btn" data-app="settings" title="Settings">
+      <span class="dock-icon">⚙</span>
+      <span class="dock-label">Settings</span>
+    </button>
+    <button class="dock-btn" data-app="about" title="About">
+      <span class="dock-icon">⚡</span>
+      <span class="dock-label">About</span>
+    </button>
+  </nav>
+
+  <template id="windowTemplate">
+    <section class="window" role="dialog" aria-modal="false">
+      <header class="window-bar">
+        <div class="window-title">Window</div>
+        <div class="window-actions">
+          <button class="win-btn" data-action="minimize">—</button>
+          <button class="win-btn" data-action="close">✕</button>
+        </div>
+      </header>
+      <div class="window-body"></div>
+    </section>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
