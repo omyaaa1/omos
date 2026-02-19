@@ -2,6 +2,8 @@
 
 Live demo: https://omyaaa1.github.io/omos/
 Git.io short link: (add your short URL here)
+Vercel (prod): https://omos-o92fskwkh-omyaas-projects.vercel.app
+Vercel (alias): https://omos-ten.vercel.app
 
 This is a web-based OS simulation with a real backend for persistence and services.
 
