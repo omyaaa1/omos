@@ -12,9 +12,16 @@ const windowTemplate = document.getElementById("windowTemplate");
 const dockButtons = document.querySelectorAll(".dock-btn[data-app]");
 const desktopIcons = document.querySelectorAll(".icon");
 
+const STORAGE_KEYS = {
+  settings: "omos-settings",
+  notes: "omos-notes"
+};
+
 let zIndexTop = 10;
 let noteCounter = 1;
 const windows = new Map();
+let notesStore = loadNotes();
+let settingsStore = loadSettings();
 
 const apps = {
   terminal: {
@@ -76,15 +83,15 @@ const apps = {
       <div class="settings-group">
         <div class="toggle">
           <span>Ambient glow</span>
-          <input id="glowToggle" type="checkbox" checked />
+          <input id="glowToggle" type="checkbox" />
         </div>
         <div class="toggle">
           <span>Show noise overlay</span>
-          <input id="noiseToggle" type="checkbox" checked />
+          <input id="noiseToggle" type="checkbox" />
         </div>
         <div class="toggle">
           <span>Dock transparency</span>
-          <input id="dockToggle" type="checkbox" checked />
+          <input id="dockToggle" type="checkbox" />
         </div>
       </div>
     `
@@ -130,6 +137,41 @@ const apps = {
     `
   }
 };
+
+function loadSettings() {
+  const fallback = { glow: true, noise: true, dock: true };
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.settings);
+    return raw ? { ...fallback, ...JSON.parse(raw) } : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function saveSettings() {
+  localStorage.setItem(STORAGE_KEYS.settings, JSON.stringify(settingsStore));
+}
+
+function applySettings() {
+  document.body.style.filter = settingsStore.glow ? "none" : "saturate(0.9)";
+  document.querySelector(".noise").style.display = settingsStore.noise ? "block" : "none";
+  document.querySelector(".dock").style.background = settingsStore.dock
+    ? "rgba(9, 12, 18, 0.6)"
+    : "rgba(9, 12, 18, 0.9)";
+}
+
+function loadNotes() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.notes);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveNotes() {
+  localStorage.setItem(STORAGE_KEYS.notes, JSON.stringify(notesStore));
+}
 
 function tickClock() {
   const now = new Date();
@@ -252,16 +294,25 @@ function createWindow(appKey) {
     const glowToggle = win.querySelector("#glowToggle");
     const noiseToggle = win.querySelector("#noiseToggle");
     const dockToggle = win.querySelector("#dockToggle");
+
+    glowToggle.checked = settingsStore.glow;
+    noiseToggle.checked = settingsStore.noise;
+    dockToggle.checked = settingsStore.dock;
+
     glowToggle.addEventListener("change", (e) => {
-      document.body.style.filter = e.target.checked ? "none" : "saturate(0.9)";
+      settingsStore.glow = e.target.checked;
+      applySettings();
+      saveSettings();
     });
     noiseToggle.addEventListener("change", (e) => {
-      document.querySelector(".noise").style.display = e.target.checked ? "block" : "none";
+      settingsStore.noise = e.target.checked;
+      applySettings();
+      saveSettings();
     });
     dockToggle.addEventListener("change", (e) => {
-      document.querySelector(".dock").style.background = e.target.checked
-        ? "rgba(9, 12, 18, 0.6)"
-        : "rgba(9, 12, 18, 0.9)";
+      settingsStore.dock = e.target.checked;
+      applySettings();
+      saveSettings();
     });
   }
 
@@ -281,6 +332,19 @@ function createWindow(appKey) {
 
   if (appKey === "notes") {
     const area = win.querySelector(".note");
+    const noteId = key;
+    const existing = notesStore.find((note) => note.id === noteId);
+    if (!existing) {
+      notesStore.push({ id: noteId, body: "" });
+      saveNotes();
+    }
+    const stored = notesStore.find((note) => note.id === noteId);
+    if (stored) area.value = stored.body;
+    area.addEventListener("input", (e) => {
+      const note = notesStore.find((item) => item.id === noteId);
+      if (note) note.body = e.target.value;
+      saveNotes();
+    });
     area?.focus();
   }
 }
@@ -356,9 +420,9 @@ function initContextMenu() {
       createWindow("notes");
     }
     if (action === "toggle-glow") {
-      const isMuted = document.body.dataset.glow === "off";
-      document.body.dataset.glow = isMuted ? "on" : "off";
-      document.body.style.filter = isMuted ? "none" : "saturate(0.9)";
+      settingsStore.glow = !settingsStore.glow;
+      applySettings();
+      saveSettings();
     }
     hideContextMenu();
   });
@@ -377,6 +441,7 @@ window.addEventListener("resize", () => {
   windows.forEach((win) => bringToFront(win));
 });
 
+applySettings();
 initDock();
 initDesktopIcons();
 initContextMenu();

@@ -10,6 +10,7 @@ Live demo: https://omyaaa1.github.io/omos/
 - App dock, launcher, and context menu
 - Terminal, Files, Notes, Monitor, Browser, Settings, About
 - Kali‑style wallpaper with ambient overlays
+- LocalStorage persistence for notes and settings
 - Fully static and GitHub Pages friendly
 
 ## Structure
