@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Omos Web OS</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="boot">
+    <pre id="boot-logo"></pre>
+    <div class="boot-line">Omos Web OS</div>
+    <div class="boot-line">Minimalist secure desktop</div>
+    <div class="boot-line">Press Enter</div>
+  </div>
+
+  <div id="desktop" class="hidden">
+    <div id="wallpaper"></div>
+
+    <div id="topbar">
+      <button id="launcher-btn" class="btn">Menu</button>
+      <div id="topbar-center">Omos</div>
+      <div id="topbar-right">
+        <span id="clock"></span>
+        <button id="notif-btn" class="btn">Notify</button>
+      </div>
+    </div>
+
+    <div id="dock">
+      <button class="dock-btn" data-app="terminal">Terminal</button>
+      <button class="dock-btn" data-app="files">Files</button>
+      <button class="dock-btn" data-app="browser">Browser</button>
+      <button class="dock-btn" data-app="server">Server</button>
+      <button class="dock-btn" data-app="writer">Writer</button>
+      <button class="dock-btn" data-app="editor">Editor</button>
+      <button class="dock-btn" data-app="monitor">Monitor</button>
+      <button class="dock-btn" data-app="network">Network</button>
+      <button class="dock-btn" data-app="settings">Settings</button>
+      <button class="dock-btn" data-app="installer">Installer</button>
+    </div>
+
+    <div id="launcher" class="panel hidden">
+      <input id="launcher-search" placeholder="Search apps..." />
+      <div id="launcher-grid"></div>
+    </div>
+
+    <div id="notifications" class="panel hidden"></div>
+
+    <div id="windows"></div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

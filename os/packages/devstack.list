@@ -1,0 +1,13 @@
+# Developer stack
+apache2
+nginx
+php
+php-mysql
+python3
+python3-pip
+nodejs
+npm
+mariadb-server
+phpmyadmin
+docker.io
+docker-compose

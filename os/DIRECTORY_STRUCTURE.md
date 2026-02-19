@@ -1,0 +1,59 @@
+# Proposed OS Source Tree
+
+This tree is the canonical layout for the OS build system and modules.
+
+```
+os/
+  ARCHITECTURE.md
+  DIRECTORY_STRUCTURE.md
+  build/
+    live-build/
+      config/               # live-build config and hooks
+    profiles/
+      minimal.yaml
+      full.yaml
+      pentest.yaml
+    scripts/
+      build-iso.sh
+  kernel/
+    linux-lts.config
+    patches/
+      README.md
+  installer/
+    README.md
+    ui/
+      README.md
+    backend/
+      README.md
+  desktop/
+    README.md
+    wm/
+      README.md
+    panel/
+      README.md
+    launcher/
+      README.md
+    themes/
+      README.md
+  packages/
+    base.list
+    desktop.list
+    devstack.list
+    browser.list
+    security.list
+    pentest.list
+  services/
+    systemd/
+      README.md
+  tools/
+    sysinfo/
+      README.md
+    ascii-boot-logo/
+      logo.txt
+  docs/
+    build.md
+    packages.md
+    security-model.md
+    file-structure.md
+    vm-setup.md
+```

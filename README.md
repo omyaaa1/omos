@@ -1,27 +1,29 @@
-﻿# Omos
+# Omos Web OS (Backend Edition)
 
-A cyber‑styled web OS with a Kali‑inspired vibe. Drag windows, launch apps, and live inside a browser desktop.
+This is a web-based OS simulation with a real backend for persistence and services.
 
-Live demo: https://omyaaa1.github.io/omos/
+## Stack (Chosen)
+- Backend: Python + FastAPI
+- Storage: SQLite
+- Realtime: WebSockets
+- Frontend: Vanilla JS + HTML + CSS (minimalist, small fonts, sharp buttons)
 
-## Features
+## Run
+1) Install backend deps
+```
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r app/backend/requirements.txt
+```
 
-- Desktop with draggable, resizable windows
-- App dock, launcher, and context menu
-- Terminal, Files, Notes, Monitor, Browser, Settings, About
-- Kali‑style wallpaper with ambient overlays
-- LocalStorage persistence for notes and settings
-- Fully static and GitHub Pages friendly
+2) Start backend
+```
+uvicorn app.backend.main:app --reload
+```
 
-## Structure
+3) Open frontend
+Open `app/frontend/index.html` in a browser.
 
-- `docs/` contains the static site for GitHub Pages
-- `docs/assets/` stores wallpapers and UI assets
-
-## Development
-
-Open `docs/index.html` or serve `docs/` with any static server.
-
-## License
-
-MIT
+## Notes
+- Backend runs on `http://127.0.0.1:8000`
+- Frontend expects the backend URL in `app/frontend/js/config.js`

@@ -1,0 +1,12 @@
+# Base packages
+linux-image-amd64
+systemd
+sudo
+ca-certificates
+curl
+wget
+openssh-client
+network-manager
+ufw
+apparmor
+fail2ban

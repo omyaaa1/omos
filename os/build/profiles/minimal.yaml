@@ -1,0 +1,7 @@
+name: minimal
+packages:
+  - base.list
+  - security.list
+features:
+  - headless
+  - no-gui
