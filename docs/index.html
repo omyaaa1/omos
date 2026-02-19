@@ -8,6 +8,7 @@
 </head>
 <body>
   <div class="wallpaper"></div>
+  <div class="wallpaper-overlay"></div>
   <div class="noise"></div>
 
   <header class="topbar">
@@ -25,9 +26,32 @@
     </div>
   </header>
 
-  <main id="desktop" class="desktop" aria-label="Omos desktop"></main>
+  <main id="desktop" class="desktop" aria-label="Omos desktop">
+    <div class="desktop-icons">
+      <button class="icon" data-app="terminal">
+        <span class="icon-img">>_</span>
+        <span class="icon-label">Terminal</span>
+      </button>
+      <button class="icon" data-app="files">
+        <span class="icon-img">📁</span>
+        <span class="icon-label">Files</span>
+      </button>
+      <button class="icon" data-app="notes">
+        <span class="icon-img">📝</span>
+        <span class="icon-label">Notes</span>
+      </button>
+      <button class="icon" data-app="monitor">
+        <span class="icon-img">📊</span>
+        <span class="icon-label">Monitor</span>
+      </button>
+    </div>
+  </main>
 
   <nav class="dock" aria-label="App launcher">
+    <button id="launcherBtn" class="dock-btn" title="Launcher">
+      <span class="dock-icon">☰</span>
+      <span class="dock-label">Apps</span>
+    </button>
     <button class="dock-btn" data-app="terminal" title="Terminal">
       <span class="dock-icon">>_</span>
       <span class="dock-label">Terminal</span>
@@ -49,6 +73,23 @@
       <span class="dock-label">About</span>
     </button>
   </nav>
+
+  <section id="launcher" class="launcher" aria-label="App launcher menu">
+    <div class="launcher-header">
+      <div class="badge">Omos Apps</div>
+      <input id="launcherSearch" type="text" placeholder="Search apps" />
+    </div>
+    <div id="launcherGrid" class="launcher-grid"></div>
+  </section>
+
+  <section id="contextMenu" class="context-menu" role="menu" aria-hidden="true">
+    <button data-action="refresh">Refresh Desktop</button>
+    <button data-action="new-terminal">Open Terminal</button>
+    <button data-action="new-note">New Note</button>
+    <button data-action="toggle-glow">Toggle Glow</button>
+  </section>
+
+  <section id="toast" class="toast" role="status" aria-live="polite"></section>
 
   <template id="windowTemplate">
     <section class="window" role="dialog" aria-modal="false">

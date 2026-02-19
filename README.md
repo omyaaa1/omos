@@ -6,15 +6,16 @@ Live demo: https://omyaaa1.github.io/omos/
 
 ## Features
 
-- Desktop with draggable windows
-- App dock and quick launcher
-- Terminal, Files, Browser, Settings, About
-- Ambient visual effects and toggles
+- Desktop with draggable, resizable windows
+- App dock, launcher, and context menu
+- Terminal, Files, Notes, Monitor, Browser, Settings, About
+- Kali‑style wallpaper with ambient overlays
 - Fully static and GitHub Pages friendly
 
 ## Structure
 
 - `docs/` contains the static site for GitHub Pages
+- `docs/assets/` stores wallpapers and UI assets
 
 ## Development
 
