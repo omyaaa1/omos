@@ -15,5 +15,5 @@ def get_state():
 
 @router.post("")
 def set_state(state: NetState):
-    kv_set("network", state.model_dump())
+    kv_set("network", state.dict())
     return {"ok": True}

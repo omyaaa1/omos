@@ -27,6 +27,16 @@ uvicorn app.backend.main:app --reload
 3) Open frontend
 Open `http://127.0.0.1:8000` in a browser.
 
+## Deploy (Vercel)
+This repo is Vercel-ready.
+
+1) Import the repo in Vercel.
+2) Framework preset: `Other`
+3) Build settings: leave defaults.
+4) Deploy.
+
+The frontend is served from `public/` and the backend API is served from `/api/*`.
+
 ## Usage
 - Press Enter on the boot screen to enter the desktop.
 - Use the dock or launcher to open apps.

@@ -22,6 +22,20 @@ class ExtractModel(BaseModel):
     path: str
     name: str
 
+
+class RenameModel(BaseModel):
+    path: str
+    new_name: str
+
+
+class DeleteModel(BaseModel):
+    path: str
+
+
+class MoveModel(BaseModel):
+    src: str
+    dest_dir: str
+
 class WriteModel(BaseModel):
     path: str
     content: str
@@ -59,7 +73,18 @@ def list_dir(model: PathModel):
     if not node or node["type"] != "dir":
         raise HTTPException(status_code=404, detail="not found")
     _ensure_attrs(node, "dir")
-    return {"entries": list(node["children"].keys())}
+    entries = []
+    for name, child in node["children"].items():
+        _ensure_attrs(child, child.get("type", "file"))
+        entries.append(
+            {
+                "name": name,
+                "type": child.get("type", "file"),
+                "perms": child.get("perms", "644"),
+                "hidden": bool(child.get("hidden", False)),
+            }
+        )
+    return {"entries": entries}
 
 
 @router.post("/read")
@@ -69,7 +94,7 @@ def read_file(model: PathModel):
     if not node or node["type"] != "file":
         raise HTTPException(status_code=404, detail="not found")
     _ensure_attrs(node, "file")
-    return {"content": node.get("content", "")}
+    return {"content": node.get("content", ""), "perms": node.get("perms", "644")}
 
 
 @router.post("/write")
@@ -161,5 +186,56 @@ def extract(model: ExtractModel):
         "perms": "755",
         "hidden": False,
     }
+    set_storage(storage)
+    return {"ok": True}
+
+
+@router.post("/rename")
+def rename(model: RenameModel):
+    storage = get_storage()
+    parts = _split(model.path)
+    if not parts:
+        raise HTTPException(status_code=400, detail="invalid path")
+    parent = _get_node(storage["files"]["/"], parts[:-1]) if len(parts) > 1 else storage["files"]["/"]
+    if not parent or parent["type"] != "dir":
+        raise HTTPException(status_code=404, detail="parent not found")
+    if parts[-1] not in parent["children"]:
+        raise HTTPException(status_code=404, detail="not found")
+    parent["children"][model.new_name] = parent["children"].pop(parts[-1])
+    set_storage(storage)
+    return {"ok": True}
+
+
+@router.post("/delete")
+def delete(model: DeleteModel):
+    storage = get_storage()
+    parts = _split(model.path)
+    if not parts:
+        raise HTTPException(status_code=400, detail="invalid path")
+    parent = _get_node(storage["files"]["/"], parts[:-1]) if len(parts) > 1 else storage["files"]["/"]
+    if not parent or parent["type"] != "dir":
+        raise HTTPException(status_code=404, detail="parent not found")
+    if parts[-1] in parent["children"]:
+        parent["children"].pop(parts[-1])
+        set_storage(storage)
+        return {"ok": True}
+    raise HTTPException(status_code=404, detail="not found")
+
+
+@router.post("/move")
+def move(model: MoveModel):
+    storage = get_storage()
+    src_parts = _split(model.src)
+    if not src_parts:
+        raise HTTPException(status_code=400, detail="invalid src")
+    src_parent = _get_node(storage["files"]["/"], src_parts[:-1]) if len(src_parts) > 1 else storage["files"]["/"]
+    if not src_parent or src_parent["type"] != "dir":
+        raise HTTPException(status_code=404, detail="src parent not found")
+    if src_parts[-1] not in src_parent["children"]:
+        raise HTTPException(status_code=404, detail="src not found")
+    dest = _get_node(storage["files"]["/"], _split(model.dest_dir))
+    if not dest or dest["type"] != "dir":
+        raise HTTPException(status_code=404, detail="dest not found")
+    dest["children"][src_parts[-1]] = src_parent["children"].pop(src_parts[-1])
     set_storage(storage)
     return {"ok": True}

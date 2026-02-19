@@ -13,5 +13,5 @@ def read_storage():
 
 @router.post("")
 def write_storage(storage: StorageModel):
-    set_storage(storage.model_dump())
+    set_storage(storage.dict())
     return {"ok": True}

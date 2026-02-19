@@ -1,0 +1,186 @@
+:root {
+  --bg: #0b0d10;
+  --panel: #0f1115;
+  --border: #22262c;
+  --text: #d7d7d7;
+  --muted: #8a8f98;
+  --accent: #6cff6c;
+  --font: 11px;
+  --radius: 0px;
+  --pad: 6px;
+  --gap: 6px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: var(--font);
+}
+
+.hidden { display: none; }
+
+#boot {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+#boot-logo { color: var(--accent); margin: 0; }
+
+#desktop {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+#wallpaper {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(145deg, #0b0d10, #0e1218);
+}
+
+#topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+}
+
+#dock {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: var(--gap);
+  padding: var(--pad);
+  background: var(--panel);
+  border: 1px solid var(--border);
+}
+
+.btn, .dock-btn {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 4px 8px;
+  border-radius: var(--radius);
+  font-size: var(--font);
+  cursor: pointer;
+}
+
+.btn:hover, .dock-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+.panel {
+  position: absolute;
+  top: 40px;
+  left: 8px;
+  width: 240px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: var(--pad);
+}
+
+.muted { color: var(--muted); }
+
+#launcher-search {
+  width: 100%;
+  padding: 4px;
+  background: #0b0d10;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.window {
+  position: absolute;
+  width: 420px;
+  height: 300px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  resize: both;
+  overflow: hidden;
+  min-width: 240px;
+  min-height: 180px;
+}
+
+.row {
+  display: flex;
+  gap: var(--gap);
+  align-items: center;
+  margin: 4px 0;
+}
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap);
+}
+
+.list {
+  border: 1px solid var(--border);
+  padding: var(--pad);
+  min-height: 60px;
+  background: #0b0d10;
+}
+
+.badge {
+  border: 1px solid var(--border);
+  padding: 2px 6px;
+}
+
+.window-header {
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6px;
+  border-bottom: 1px solid var(--border);
+  cursor: move;
+}
+
+.window-body {
+  flex: 1;
+  padding: 8px;
+  overflow: auto;
+}
+
+.window-controls button {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  margin-left: 4px;
+}
+
+input, textarea, select {
+  background: #0b0d10;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: var(--font);
+}
+
+.error {
+  color: #ff6b6b;
+}
+
+textarea { width: 100%; height: 100%; resize: none; }

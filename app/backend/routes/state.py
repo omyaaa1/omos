@@ -14,5 +14,5 @@ def read_state():
 
 @router.post("")
 def write_state(state: StateModel):
-    set_state(state.model_dump())
+    set_state(state.dict())
     return {"ok": True}

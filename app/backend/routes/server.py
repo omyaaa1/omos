@@ -49,6 +49,6 @@ def vhosts():
 @router.post("/vhosts")
 def add_vhost(vhost: VHost):
     vhosts = kv_get("vhosts", [])
-    vhosts.append(vhost.model_dump())
+    vhosts.append(vhost.dict())
     kv_set("vhosts", vhosts)
     return {"ok": True}

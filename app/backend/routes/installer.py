@@ -14,5 +14,5 @@ def get_state():
 
 @router.post("")
 def set_state(state: InstallState):
-    kv_set("installer", state.model_dump())
+    kv_set("installer", state.dict())
     return {"ok": True}
